@@ -60,14 +60,10 @@
         border-bottom: 1px solid var(--border);
         display: flex;
         gap: 10px;
-        height: 36px;
-        padding: 5px 12px;
+        height: 34px;
+        padding: 4px 12px;
       }
-      .brand {
-        align-items: center;
-        display: flex;
-        gap: 7px;
-      }
+      .brand { align-items: center; display: flex; gap: 7px; }
       .mark {
         background: var(--fg);
         border-radius: 3px;
@@ -81,16 +77,8 @@
         padding: 0 4px;
         place-items: center;
       }
-      .brand h1 {
-        font-size: var(--t-lg);
-        font-weight: 600;
-        margin: 0;
-      }
-      .brand .sub {
-        color: var(--fg-subtle);
-        font-family: var(--font-mono);
-        font-size: var(--t-sm);
-      }
+      .brand h1 { font-size: var(--t-lg); font-weight: 600; margin: 0; }
+      .brand .sub { color: var(--fg-subtle); font-family: var(--font-mono); font-size: var(--t-sm); }
       .topbar-spacer { flex: 1; }
       .meta-pill {
         align-items: center;
@@ -106,12 +94,7 @@
         padding: 0 7px;
       }
       .meta-pill strong { color: var(--fg); font-weight: 600; }
-      .meta-pill .dot {
-        background: var(--success);
-        border-radius: 50%;
-        height: 6px;
-        width: 6px;
-      }
+      .meta-pill .dot { background: var(--success); border-radius: 50%; height: 6px; width: 6px; }
       .legend {
         align-items: center;
         color: var(--fg-subtle);
@@ -119,15 +102,19 @@
         font-size: var(--t-sm);
         gap: 6px;
       }
+      .legend .swatch {
+        display: inline-flex;
+        gap: 4px;
+      }
 
       .grid {
         display: grid;
-        gap: 8px;
+        gap: 6px;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: min-content;
         min-height: 0;
         overflow: hidden;
-        padding: 8px 12px;
+        padding: 6px 10px;
       }
 
       .card {
@@ -148,7 +135,7 @@
         font-size: var(--t-xxs);
         font-weight: 600;
         gap: 6px;
-        height: 22px;
+        height: 20px;
         justify-content: space-between;
         letter-spacing: 0.1em;
         padding: 0 8px;
@@ -166,6 +153,7 @@
       table {
         border-collapse: collapse;
         font-size: var(--t-sm);
+        table-layout: fixed;
         width: 100%;
       }
       tbody tr { border-top: 1px solid var(--border); }
@@ -179,12 +167,53 @@
         font-family: var(--font-mono);
         font-size: var(--t-xs);
         white-space: nowrap;
-        width: 1%;
+        width: 50%;
       }
       td.d {
         color: var(--fg-muted);
         line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
+
+      /* Common = full emphasis. Advanced = muted, smaller, mono kbd flat. */
+      tr.adv td { padding: 1px 6px; }
+      tr.adv td.k { font-size: 9.5px; }
+      tr.adv td.d { color: var(--fg-subtle); font-size: 10px; }
+      tr.adv .kbd {
+        background: transparent;
+        border-color: var(--border);
+        border-bottom-width: 1px;
+        color: var(--fg-muted);
+        font-size: 9px;
+        padding: 1px 3px;
+      }
+      tr.adv .kbd.px, tr.adv .kbd.cmd {
+        background: transparent;
+        border-color: var(--border);
+        color: var(--fg-muted);
+      }
+
+      tr.subdiv td {
+        color: var(--fg-faint);
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        padding: 3px 8px 1px;
+        text-transform: uppercase;
+      }
+      tr.subdiv td::before {
+        content: "";
+        background: var(--border);
+        display: inline-block;
+        height: 1px;
+        margin-right: 6px;
+        vertical-align: middle;
+        width: 14px;
+      }
+      tr.subdiv { border-top: 0 !important; }
+      tr.subdiv:hover { background: transparent; }
 
       .kbd {
         background: var(--bg);
@@ -211,29 +240,8 @@
         border-color: color-mix(in oklab, var(--warn) 30%, var(--border-strong));
         color: var(--warn);
       }
-      .sep {
-        color: var(--fg-faint);
-        font-family: var(--font-mono);
-        font-size: 10px;
-        margin: 0 1px;
-      }
-      .or {
-        color: var(--fg-faint);
-        font-size: 9.5px;
-        margin: 0 2px;
-      }
-      .tag {
-        background: var(--bg-sunken);
-        border: 1px solid var(--border);
-        border-radius: 2px;
-        color: var(--fg-subtle);
-        font-family: var(--font-mono);
-        font-size: 9px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        padding: 0 4px;
-        text-transform: uppercase;
-      }
+      .sep { color: var(--fg-faint); font-family: var(--font-mono); font-size: 10px; margin: 0 1px; }
+      .or { color: var(--fg-faint); font-size: 9.5px; margin: 0 2px; }
 
       .statusbar {
         align-items: center;
@@ -269,12 +277,14 @@
           <span class="kbd">key</span> chord
           <span class="sep">·</span>
           <span class="kbd cmd">:cmd</span> command-mode
+          <span class="sep">·</span>
+          <span style="opacity:0.7">faded = advanced</span>
         </span>
         <span class="meta-pill"><span class="dot"></span> default prefix <strong>C-b</strong></span>
       </header>
 
       <main class="grid">
-        <!-- Column 1 -->
+        <!-- Row 1 -->
         <section class="card">
           <div class="card-head"><span>Sessions</span><span class="count">prefix + key</span></div>
           <table>
@@ -284,13 +294,18 @@
               <tr><td class="k"><span class="kbd cmd">tmux ls</span></td><td class="d">list sessions</td></tr>
               <tr><td class="k"><span class="kbd cmd">tmux a</span> <span class="or">/</span> <span class="kbd cmd">a -t</span> <em>n</em></td><td class="d">attach last / by name</td></tr>
               <tr><td class="k"><span class="kbd cmd">tmux kill-ses -t</span> <em>n</em></td><td class="d">kill session</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux kill-server</span></td><td class="d">kill all sessions</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">d</span></td><td class="d">detach client</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">D</span></td><td class="d">choose client to detach</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">s</span></td><td class="d">choose session (tree)</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">$</span></td><td class="d">rename session</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">(</span> <span class="or">/</span> <span class="kbd">)</span></td><td class="d">previous / next session</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">L</span></td><td class="d">switch to last session</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">tmux new -A -s</span> <em>n</em></td><td class="d">attach or create</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">tmux a -d</span></td><td class="d">attach, detach others</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">tmux kill-server</span></td><td class="d">kill all sessions</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">D</span></td><td class="d">choose client to detach</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">(</span> <span class="or">/</span> <span class="kbd">)</span></td><td class="d">previous / next session</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">L</span></td><td class="d">switch to last session</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:switch-client -lpn</span></td><td class="d">last / prev / next client</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:refresh-client</span></td><td class="d">force redraw</td></tr>
             </tbody>
           </table>
         </section>
@@ -304,13 +319,18 @@
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">&amp;</span></td><td class="d">kill window (confirm)</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">w</span></td><td class="d">choose window (tree)</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">0</span> … <span class="kbd">9</span></td><td class="d">select window by index</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">'</span></td><td class="d">prompt window index</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">n</span> <span class="or">/</span> <span class="kbd">p</span></td><td class="d">next / previous</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">l</span></td><td class="d">last active window</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">f</span></td><td class="d">find window by text</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">.</span></td><td class="d">move window (idx)</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:swap-window -t</span> <em>n</em></td><td class="d">swap with window n</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:move-window -t</span> <em>s:n</em></td><td class="d">move to session/idx</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">'</span></td><td class="d">prompt window index</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">.</span></td><td class="d">move window (idx)</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:swap-window -t</span> <em>n</em></td><td class="d">swap with window n</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:move-window -t</span> <em>s:n</em></td><td class="d">move to session/idx</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:link-window -t</span> <em>s:n</em></td><td class="d">link into other session</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:new-window -c</span> <em>"#{pane_current_path}"</em></td><td class="d">new in current dir</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:respawn-window -k</span></td><td class="d">restart window cmd</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:setw monitor-activity on</span></td><td class="d">flag activity</td></tr>
             </tbody>
           </table>
         </section>
@@ -319,19 +339,25 @@
           <div class="card-head"><span>Panes</span><span class="count">prefix + key</span></div>
           <table>
             <tbody>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">%</span></td><td class="d">split vertical (left/right)</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">"</span></td><td class="d">split horizontal (top/btm)</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">o</span></td><td class="d">cycle through panes</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">;</span></td><td class="d">toggle last active pane</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">%</span></td><td class="d">split vertical (l / r)</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">"</span></td><td class="d">split horizontal (t / b)</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">←</span><span class="kbd">↓</span><span class="kbd">↑</span><span class="kbd">→</span></td><td class="d">navigate by direction</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">q</span></td><td class="d">show pane numbers</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">q</span> <span class="kbd">0-9</span></td><td class="d">jump to pane number</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">{</span> <span class="or">/</span> <span class="kbd">}</span></td><td class="d">swap pane prev / next</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">o</span></td><td class="d">cycle through panes</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">z</span></td><td class="d">zoom / unzoom pane</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">!</span></td><td class="d">break pane → new window</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">x</span></td><td class="d">kill pane (confirm)</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">q</span></td><td class="d">show pane numbers</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">space</span></td><td class="d">cycle layout presets</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">t</span></td><td class="d">show clock</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">;</span></td><td class="d">toggle last active pane</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">q</span> <span class="kbd">0-9</span></td><td class="d">jump to pane number</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">{</span> <span class="or">/</span> <span class="kbd">}</span></td><td class="d">swap prev / next</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">!</span></td><td class="d">break pane → new window</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">t</span></td><td class="d">show clock</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:splitw -h -c</span> <em>"#{pane_current_path}"</em></td><td class="d">split in same dir</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:select-pane -m</span> <span class="or">/</span> <span class="kbd cmd">-M</span></td><td class="d">mark / unmark pane</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:swap-pane -s '{marked}'</span></td><td class="d">swap with marked</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:kill-pane -a</span></td><td class="d">kill all other panes</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:respawn-pane -k</span></td><td class="d">restart pane cmd</td></tr>
             </tbody>
           </table>
         </section>
@@ -344,97 +370,121 @@
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">⌃↑</span> <span class="kbd">⌃↓</span></td><td class="d">resize ±1 vertical</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">⌥←</span> <span class="kbd">⌥→</span></td><td class="d">resize ±5 horizontal</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">⌥↑</span> <span class="kbd">⌥↓</span></td><td class="d">resize ±5 vertical</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-1</span></td><td class="d">even horizontal layout</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-2</span></td><td class="d">even vertical layout</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-3</span></td><td class="d">main horizontal layout</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-4</span></td><td class="d">main vertical layout</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-5</span></td><td class="d">tiled layout</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:resize-pane -D</span> <em>n</em></td><td class="d">resize down n cells</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:select-layout</span> <em>name</em></td><td class="d">apply layout by name</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:join-pane -s</span> <em>w</em></td><td class="d">join window as pane</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">M-1</span> <span class="or">…</span> <span class="kbd">M-5</span></td><td class="d">even-h, even-v, main-h, main-v, tiled</td></tr>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">space</span></td><td class="d">cycle next layout</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:resize-pane -D/-U/-L/-R</span> <em>n</em></td><td class="d">resize by n in direction</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:resize-pane -x</span> <em>n</em> <span class="kbd cmd">-y</span> <em>n</em></td><td class="d">set width / height</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:resize-pane -Z</span></td><td class="d">toggle zoom (via cmd)</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:select-layout</span> <em>name</em></td><td class="d">apply layout by name</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:select-layout -E</span></td><td class="d">spread panes evenly</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:join-pane -s</span> <em>w</em></td><td class="d">join window as pane</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:break-pane -d</span></td><td class="d">break, don't switch</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:set -g main-pane-width</span> <em>n</em></td><td class="d">set main layout size</td></tr>
             </tbody>
           </table>
         </section>
 
         <!-- Row 2 -->
         <section class="card">
-          <div class="card-head"><span>Copy Mode (vi)</span><span class="count">enter: <span style="font-family:var(--font-mono)">⌃b [</span></span></div>
+          <div class="card-head"><span>Copy Mode (vi)</span><span class="count">enter <span style="font-family:var(--font-mono)">⌃b [</span></span></div>
           <table>
             <tbody>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">[</span></td><td class="d">enter copy mode</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">]</span></td><td class="d">paste buffer</td></tr>
               <tr><td class="k"><span class="kbd">q</span> <span class="or">/</span> <span class="kbd">Esc</span></td><td class="d">quit copy mode</td></tr>
               <tr><td class="k"><span class="kbd">h</span> <span class="kbd">j</span> <span class="kbd">k</span> <span class="kbd">l</span></td><td class="d">move cursor</td></tr>
-              <tr><td class="k"><span class="kbd">w</span> <span class="kbd">b</span> <span class="kbd">e</span></td><td class="d">word forward / back / end</td></tr>
+              <tr><td class="k"><span class="kbd">w</span> <span class="kbd">b</span> <span class="kbd">e</span></td><td class="d">word fwd / back / end</td></tr>
               <tr><td class="k"><span class="kbd">0</span> <span class="kbd">^</span> <span class="kbd">$</span></td><td class="d">line start / first / end</td></tr>
               <tr><td class="k"><span class="kbd">g</span> <span class="kbd">G</span></td><td class="d">top / bottom</td></tr>
-              <tr><td class="k"><span class="kbd">⌃u</span> <span class="kbd">⌃d</span></td><td class="d">page up / down ½</td></tr>
-              <tr><td class="k"><span class="kbd">⌃b</span> <span class="kbd">⌃f</span></td><td class="d">page up / down full</td></tr>
               <tr><td class="k"><span class="kbd">/</span> <span class="kbd">?</span></td><td class="d">search fwd / backward</td></tr>
               <tr><td class="k"><span class="kbd">n</span> <span class="kbd">N</span></td><td class="d">next / previous match</td></tr>
-              <tr><td class="k"><span class="kbd">space</span></td><td class="d">begin selection</td></tr>
-              <tr><td class="k"><span class="kbd">v</span> <span class="kbd">V</span> <span class="kbd">⌃v</span></td><td class="d">char / line / block select</td></tr>
-              <tr><td class="k"><span class="kbd">enter</span> <span class="or">/</span> <span class="kbd">y</span></td><td class="d">copy selection &amp; exit</td></tr>
+              <tr><td class="k"><span class="kbd">v</span> <span class="kbd">V</span> <span class="kbd">⌃v</span></td><td class="d">char / line / block sel</td></tr>
+              <tr><td class="k"><span class="kbd">enter</span> <span class="or">/</span> <span class="kbd">y</span></td><td class="d">copy selection + exit</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">⌃u</span> <span class="kbd">⌃d</span></td><td class="d">page ½ up / down</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">⌃b</span> <span class="kbd">⌃f</span></td><td class="d">page full up / down</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">H</span> <span class="kbd">M</span> <span class="kbd">L</span></td><td class="d">top / mid / bottom screen</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">f</span><em>x</em> <span class="kbd">F</span><em>x</em></td><td class="d">find char fwd / back</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">{</span> <span class="kbd">}</span> <span class="or">·</span> <span class="kbd">%</span></td><td class="d">para back/fwd · match bracket</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd">*</span> <span class="kbd">#</span></td><td class="d">search word under cursor</td></tr>
             </tbody>
           </table>
         </section>
 
         <section class="card">
-          <div class="card-head"><span>Buffers</span><span class="count">copy/paste store</span></div>
+          <div class="card-head"><span>Buffers / Clipboard</span><span class="count">copy store</span></div>
           <table>
             <tbody>
+              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">]</span></td><td class="d">paste most recent buffer</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">=</span></td><td class="d">choose buffer to paste</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">#</span></td><td class="d">list paste buffers</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">-</span></td><td class="d">delete most recent buffer</td></tr>
               <tr><td class="k"><span class="kbd cmd">:list-buffers</span></td><td class="d">list buffers</td></tr>
               <tr><td class="k"><span class="kbd cmd">:show-buffer</span></td><td class="d">print top buffer</td></tr>
               <tr><td class="k"><span class="kbd cmd">:save-buffer</span> <em>file</em></td><td class="d">save buffer to file</td></tr>
               <tr><td class="k"><span class="kbd cmd">:load-buffer</span> <em>file</em></td><td class="d">load file into buffer</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:set-buffer</span> <em>str</em></td><td class="d">set buffer string</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:paste-buffer -p</span></td><td class="d">paste with bracketing</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:delete-buffer -b</span> <em>n</em></td><td class="d">delete buffer n</td></tr>
               <tr><td class="k"><span class="kbd cmd">:capture-pane -p</span></td><td class="d">capture pane → stdout</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:choose-buffer</span></td><td class="d">interactive picker</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">-</span></td><td class="d">delete most recent buffer</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:set-buffer</span> <em>str</em></td><td class="d">set buffer string</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:paste-buffer -p</span></td><td class="d">paste with bracketing</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:delete-buffer -b</span> <em>n</em></td><td class="d">delete buffer n</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:choose-buffer</span></td><td class="d">interactive picker</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:capture-pane -S -3000 -p</span></td><td class="d">capture last 3000 lines</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:save-buffer -b 0</span> <em>file</em></td><td class="d">save specific buffer</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:set -g set-clipboard on</span></td><td class="d">sync system clipboard</td></tr>
             </tbody>
           </table>
         </section>
 
         <section class="card">
-          <div class="card-head"><span>Command &amp; Help</span><span class="count">:cmd line</span></div>
+          <div class="card-head"><span>Commands &amp; Bindings</span><span class="count">: prompt</span></div>
           <table>
             <tbody>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">:</span></td><td class="d">enter command prompt</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">?</span></td><td class="d">list all key bindings</td></tr>
               <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">~</span></td><td class="d">show messages log</td></tr>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">r</span></td><td class="d">reload (if bound)</td></tr>
               <tr><td class="k"><span class="kbd cmd">:source</span> ~/.tmux.conf</td><td class="d">reload config</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:set -g</span> <em>opt val</em></td><td class="d">set global option</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:setw -g</span> <em>opt val</em></td><td class="d">set window option</td></tr>
               <tr><td class="k"><span class="kbd cmd">:bind</span> <em>k cmd</em></td><td class="d">bind a key</td></tr>
               <tr><td class="k"><span class="kbd cmd">:unbind</span> <em>k</em></td><td class="d">remove a binding</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:show -g</span></td><td class="d">show all options</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:display</span> <em>msg</em></td><td class="d">flash message</td></tr>
-              <tr><td class="k"><span class="kbd cmd">:if -F</span> <em>cond cmd</em></td><td class="d">conditional command</td></tr>
+              <tr><td class="k"><span class="kbd cmd">:set -g</span> <em>opt val</em></td><td class="d">set global option</td></tr>
+              <tr><td class="k"><span class="kbd cmd">:setw -g</span> <em>opt val</em></td><td class="d">set window option</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:show -g</span> <span class="or">/</span> <span class="kbd cmd">-gw</span></td><td class="d">show global / window opts</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:list-keys</span></td><td class="d">dump key table</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:list-keys -T copy-mode-vi</span></td><td class="d">specific key table</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:display</span> <em>msg</em></td><td class="d">flash status message</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:run-shell</span> <em>'cmd'</em></td><td class="d">run external shell cmd</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:if -F</span> <em>cond cmd</em></td><td class="d">conditional command</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:command-prompt -p</span> <em>'q?'</em></td><td class="d">prompt user for input</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">:lock-server</span> <span class="or">·</span> <span class="kbd cmd">:wait-for</span></td><td class="d">lock · sync channel</td></tr>
             </tbody>
           </table>
         </section>
 
         <section class="card">
-          <div class="card-head"><span>Misc &amp; Power</span><span class="count">handy bits</span></div>
+          <div class="card-head"><span>Options &amp; Hooks</span><span class="count">in .tmux.conf</span></div>
           <table>
             <tbody>
-              <tr><td class="k"><span class="kbd px">⌃b</span> <span class="kbd">⌃b</span></td><td class="d">send literal prefix</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux a -d</span></td><td class="d">attach, detach others</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux new -A -s</span> <em>n</em></td><td class="d">attach or create if missing</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux source ~/.tmux.conf</span></td><td class="d">reload from shell</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux list-keys</span></td><td class="d">dump bindings</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux show -g</span></td><td class="d">dump global options</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux send-keys -t</span> <em>p</em> <em>"x"</em> Enter</td><td class="d">send keys to pane</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux pipe-pane -o</span> <em>"cat&gt;f"</em></td><td class="d">stream pane to file</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux setenv -g</span> <em>K V</em></td><td class="d">set env var</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux display -p</span> <em>'#S:#I'</em></td><td class="d">print formatted</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux lock</span></td><td class="d">lock server</td></tr>
-              <tr><td class="k"><span class="kbd cmd">tmux info</span></td><td class="d">server / client info</td></tr>
+              <tr><td class="k"><span class="kbd cmd">set -g mouse on</span></td><td class="d">enable mouse support</td></tr>
+              <tr><td class="k"><span class="kbd cmd">set -g prefix C-a</span></td><td class="d">remap prefix to C-a</td></tr>
+              <tr><td class="k"><span class="kbd cmd">bind C-a send-prefix</span></td><td class="d">pass prefix through</td></tr>
+              <tr><td class="k"><span class="kbd cmd">set -g history-limit 50000</span></td><td class="d">scrollback size</td></tr>
+              <tr><td class="k"><span class="kbd cmd">set -g base-index 1</span></td><td class="d">windows start at 1</td></tr>
+              <tr><td class="k"><span class="kbd cmd">setw -g pane-base-index 1</span></td><td class="d">panes start at 1</td></tr>
+              <tr><td class="k"><span class="kbd cmd">setw -g mode-keys vi</span></td><td class="d">vi keys in copy mode</td></tr>
+              <tr><td class="k"><span class="kbd cmd">set -g default-terminal</span> <em>tmux-256color</em></td><td class="d">256-color terminal</td></tr>
+              <tr class="subdiv"><td colspan="2">advanced</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set -g status-position top</span></td><td class="d">status bar at top</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set -g status-interval 5</span></td><td class="d">refresh status every n s</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set -g renumber-windows on</span></td><td class="d">renumber on close</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set -g focus-events on</span></td><td class="d">forward focus to apps</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set -ga terminal-overrides</span> <em>',*:RGB'</em></td><td class="d">true-color support</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">setw -g monitor-activity on</span></td><td class="d">flag active windows</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">setw synchronize-panes on</span></td><td class="d">type to all panes at once</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">set-hook -g session-created</span> <em>cmd</em></td><td class="d">run cmd on event</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">tmux send-keys -t</span> <em>p "x" Enter</em></td><td class="d">send keys to pane</td></tr>
+              <tr class="adv"><td class="k"><span class="kbd cmd">tmux pipe-pane -o</span> <em>'cat&gt;f'</em></td><td class="d">stream pane to file</td></tr>
             </tbody>
           </table>
         </section>
@@ -446,7 +496,7 @@
         <span class="status-item"><span class="lbl">socket:</span> /tmp/tmux-$UID</span>
         <span class="spacer"></span>
         <span class="status-item"><span class="lbl">docs:</span> <a href="https://man.openbsd.org/tmux.1">man tmux(1)</a></span>
-        <span class="status-item"><span class="lbl">tip:</span> remap <span class="kbd" style="font-size:9.5px;padding:1px 3px">C-a</span> as prefix in <em>set -g prefix C-a</em></span>
+        <span class="status-item"><span class="lbl">tip:</span> press <span class="kbd" style="font-size:9.5px;padding:1px 3px">⌃b ?</span> in tmux to dump every binding</span>
       </footer>
     </div>
   </body>
